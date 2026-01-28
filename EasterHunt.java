@@ -403,8 +403,8 @@ public class EasterHunt {
             Draw.setColor(0, 0, 0); //Schwarzer Hintergrund M
             Draw.filledRect(0, 0, width, height);
             Draw.setColor(255, 0, 0); //Roter Text M
-            Draw.text(width / 2 , height / 2 + 30, "GAME OVER"); //Game Over Text M
-            Draw.text(width / 2, height / 2 - 30, "Press R to restart");
+            Draw.text(width / 2 - 210, height / 2 - 50, "GAME OVER"); //Game Over Text M
+            Draw.text(width / 2 - 158, height / 2 + 100, "Press R to restart");
             if ( Draw.isKeyDown(KeyEvent.VK_R)){  //R Taste zum Neustarten M
                 gameover = false;
                 bunny = new Bunny(0, groundY, width); // Neues Bunny Objekt erzeugt M
