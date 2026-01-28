@@ -1,0 +1,120 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class EasterHunt {
+
+    // ================= SCORE =================
+    private static int score = 0;
+
+    public static void addScore(int points) {
+        score += points;
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    // ================= MAIN =================
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        Bunny bunny = new Bunny();
+        Eagle eagle = new Eagle();
+
+        List<Egg> eggs = new ArrayList<>();
+        eggs.add(new Egg("Rot"));
+        eggs.add(new Egg("Blau"));
+        eggs.add(new Egg("Grün"));
+
+        System.out.println("🐰 === EASTER HUNT GESTARTET === 🥚");
+
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\nWas möchtest du tun?");
+            System.out.println("1 = Ei sammeln (+10 Punkte)");
+            System.out.println("2 = Adler angreifen (+50 Punkte)");
+            System.out.println("0 = Spiel beenden");
+            System.out.print("Eingabe: ");
+
+            int input = scanner.nextInt();
+
+            switch (input) {
+                case 1:
+                    if (!eggs.isEmpty()) {
+                        Egg egg = eggs.remove(0);
+                        bunny.collectEgg(egg);
+                    } else {
+                        System.out.println("❌ Keine Eier mehr!");
+                    }
+                    break;
+
+                case 2:
+                    bunny.attack(eagle);
+                    break;
+
+                case 0:
+                    running = false;
+                    break;
+
+                default:
+                    System.out.println("❌ Ungültige Eingabe!");
+            }
+
+            System.out.println("⭐ Aktuelle Punkte: " + getScore());
+        }
+
+        System.out.println("\n🎉 SPIEL BEENDET!");
+        System.out.println("🏆 ENDSTAND: " + getScore() + " Punkte");
+        scanner.close();
+    }
+}
+
+// ================= BUNNY =================
+class Bunny {
+
+    public void collectEgg(Egg egg) {
+        System.out.println("🐰 Du hast ein " + egg.getColor() + "es Ei gesammelt!");
+        EasterHunt.addScore(10);
+    }
+
+    public void attack(Eagle eagle) {
+        if (eagle.isAlive()) {
+            System.out.println("🐰 Du greifst den Adler an!");
+            eagle.takeDamage();
+            EasterHunt.addScore(50);
+        } else {
+            System.out.println("🦅 Der Adler ist bereits besiegt!");
+        }
+    }
+}
+
+// ================= EGG =================
+class Egg {
+
+    private String color;
+
+    public Egg(String color) {
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+}
+
+// ================= EAGLE =================
+class Eagle {
+
+    private boolean alive = true;
+
+    public boolean isAlive() {
+        return alive;
+    }
+
+    public void takeDamage() {
+        System.out.println("🦅 Adler wurde besiegt!");
+        alive = false;
+    }
+}
